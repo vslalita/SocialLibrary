@@ -8,7 +8,8 @@ import com.sociallibrary.db.DBHelper;
 import com.sociallibrary.domain.Member;
 import com.sociallibrary.service.BookServiceController;
 
-public class UpdateOperation implements BookOperation, IObservable {
+//This class acts as a Concrete Command of the Command Pattern and Observable of Observer Pattern
+public class UpdateOperation implements BookOperation{
 	private ArrayList<Member> members=new ArrayList<Member>();
     private String updateAction;
     private int memberBookId;
@@ -19,12 +20,13 @@ public class UpdateOperation implements BookOperation, IObservable {
 	}
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+		//Macro- these 4 lines of code give the sequence of actions to be performed. Hence command pattern was used.
 		bo.updateBook(updateAction, memberBookId);
 		addSubscribers();
 		notifyAllSubscribers();
 	}
 	
+	//Macro- these 4 lines of code give the sequence of actions to be performed. Hence command pattern was used.
 	public void addSubscribers(){
 		String sql="Select * "
 				+ "from members m, bookrequest br "
@@ -39,13 +41,13 @@ public class UpdateOperation implements BookOperation, IObservable {
 					members.add(m);
 				}
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		
 	}
    
+	//This method calls notify method on all the observers as a part of the Observer Pattern
 	public void notifyAllSubscribers(){
 		for(int i=0;i<members.size();i++){
 			ResultSet book=BookServiceController.getInstance().getBookbyId(memberBookId);
@@ -53,7 +55,6 @@ public class UpdateOperation implements BookOperation, IObservable {
 				book.first();
 				members.get(i).notify(book.getString("bookname"),"update");
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

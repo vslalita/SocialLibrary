@@ -27,6 +27,7 @@
 		<div class="col-md-8">
 		     <div class="row">
 		     <a href="/SocialLibrary/create_group.jsp"><button type="button" class="btn btn-warning">Create Group</button></a>
+		     <a href="/SocialLibrary/MainPage?operation=signout"><button type="button" class="btn btn-warning">SignOut</button></a>
 		     </div> <br><br>
 		     
 			<div class="row">

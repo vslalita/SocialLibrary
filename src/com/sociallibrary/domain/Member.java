@@ -6,7 +6,7 @@ import java.sql.Statement;
 import com.sociallibrary.*;
 import com.sociallibrary.db.DatabaseConnection;
 
-
+//This class acts as a observer of the observer Pattern
 public class Member implements IObserver {
 	private String  firstName;
 	private String lastName;
@@ -58,6 +58,7 @@ public class Member implements IObserver {
 		return this.Email;
 	}
 	
+	//This method provides functionality of what shud happen when notified.
 	public void notify(String bookname,String action){
 		try {
 			Statement st = DatabaseConnection.connectionRequest().createStatement();
@@ -67,6 +68,9 @@ public class Member implements IObserver {
 			}
 			else if(action.equals("delete")){
 				notification=bookname+"has been deleted by "+CurrentSession.getMember().firstName;
+			}
+			else if(action.equals("request")){
+				notification=bookname+"has been requested by "+CurrentSession.getMember().firstName;
 			}
 			else if(action.equals("update")){
 				notification=bookname+"has been updated by "+CurrentSession.getMember().firstName;

@@ -32,42 +32,45 @@ public class MainPage extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-     
-	
+		if(request.getParameter("operation").equals("signout")){
+			MemberServiceController.getInstance().signout();
+			System.out.println("Signedout");
+		}
+
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		String nextPage;
 		if(MemberServiceController.getInstance().login(request.getParameter("username"),request.getParameter("password"))){
-			//TODO change request to response
 			request.setAttribute("name",CurrentSession.getMember().getFirstName()+" "+CurrentSession.getMember().getLastName());
 			request.setAttribute("address",CurrentSession.getMember().getAddress());
 			request.setAttribute("email",CurrentSession.getMember().getEmail());
 			request.setAttribute("member", CurrentSession.getMember());
-			
+
 			int userId=CurrentSession.getMember().getId();
 			ResultSet myBooks=BookServiceController.getInstance().getBooks("OwnedBooks",userId);
 			ResultSet myBorrowedBooks=BookServiceController.getInstance().getBooks("BorrowedBooks",userId);
 			ResultSet myRequestedBooks=BookServiceController.getInstance().getBooks("RequestedBooks",userId);
 			ResultSet myGroups=MemberServiceController.getInstance().getgroups(CurrentSession.getMember().getId());
-			
-			//TODO change request to response
-            request.setAttribute("ownedbooks", myBooks);
-            request.setAttribute("groups", myGroups);
-            request.setAttribute("borrowedbooks", myBorrowedBooks);
-            request.setAttribute("requestedbooks", myRequestedBooks);
-            
-			getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
+
+			request.setAttribute("ownedbooks", myBooks);
+			request.setAttribute("groups", myGroups);
+			request.setAttribute("borrowedbooks", myBorrowedBooks);
+			request.setAttribute("requestedbooks", myRequestedBooks);
+			nextPage="/home.jsp";
 		}
 		else{
-			getServletContext().getRequestDispatcher("/register.jsp").forward(request, response);
+			nextPage="/register.jsp";
+
 		}
-		
+
+		getServletContext().getRequestDispatcher(nextPage).forward(request, response);
+
 	}
-	
-	
+
+
 
 }

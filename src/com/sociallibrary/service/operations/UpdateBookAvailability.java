@@ -7,9 +7,10 @@ import java.sql.Statement;
 import com.sociallibrary.db.DatabaseConnection;
 import com.sociallibrary.domain.CurrentSession;
 
+//This class provides an implementation for the abstract methods of IUpdateTemplate
 public class UpdateBookAvailability extends IUpdateTemplate{
   
-	
+	//This method validates if the user updating the book is a borrower of the book
 	public boolean validate(){
 		Statement st;
 		try {

@@ -18,6 +18,7 @@ public class BookServiceController {
 	private BookServiceController(){
 	}
 	
+	//This method returns an instance for BookServiceController and the same instance is used through out the application 
 	public static BookServiceController getInstance(){
 		if(bookServicecontroller==null){
 			bookServicecontroller=new BookServiceController();
@@ -25,7 +26,8 @@ public class BookServiceController {
 		}
 		return bookServicecontroller;
 	}
-
+    
+	//
 	public void addBook(Book book){
 		OperationsFacade of=new OperationsFacade();
 		of.operations("Add", null, book);

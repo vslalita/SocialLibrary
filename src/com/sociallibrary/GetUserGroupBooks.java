@@ -5,7 +5,8 @@ import java.sql.*;
 import com.sociallibrary.db.DBHelper;
 
 public class GetUserGroupBooks implements GetUserRelatedBooks{
-
+   
+	//This method has an implementation which retrieves all the books belonging to members of the groups in which the user bearing the parameter id exists.
 	@Override
 	public ResultSet getBooks(int id) {
 		

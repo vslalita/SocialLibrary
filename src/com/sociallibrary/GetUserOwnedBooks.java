@@ -5,7 +5,8 @@ import java.sql.*;
 import com.sociallibrary.db.DBHelper;
 
 public class GetUserOwnedBooks implements GetUserRelatedBooks {
-
+    
+	//This method gives the implementation for retrieving the books of the member bearing the id ; parameter id.
 	@Override
 	public ResultSet getBooks(int id) {
 		String sql="Select mb.id memberbookid, b.id bookid, bookname "

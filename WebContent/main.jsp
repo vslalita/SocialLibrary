@@ -65,6 +65,9 @@ p {
 					<button type="submit" class="btn btn-default">Login</button>
 					<br>
 					<br>
+					<a href="/SocialLibrary/register.jsp"><button class="btn btn-default">Register</button></a>
+					<br>
+					<br>
 				</form>
 			</div>
 			<div class="col-md-5 container">

@@ -12,7 +12,8 @@ import com.sociallibrary.domain.CurrentSession;
 import com.sociallibrary.domain.Member;
 import com.sociallibrary.service.BookServiceController;
 
-public class DeleteOperation implements BookOperation, IObservable {
+//This class acts as a Concrete Command of the Command Pattern and Observable of Observer Pattern
+public class DeleteOperation implements BookOperation{
     private int id;
 	private ArrayList<Member> members=new ArrayList<Member>();
 
@@ -23,12 +24,14 @@ public class DeleteOperation implements BookOperation, IObservable {
     
 	@Override
 	public void execute() {
+		//Macro- these 4 lines of code give the sequence of actions to be performed. Hence command pattern was used.
 		addSubscribers();
 		notifyAllSubscribers();
 		deleteBookRequests();
         bo.deleteBook(id);
 	}
 	
+	//This method is one of the actions to be performed after the addition of a book happens
 	public void deleteBookRequests(){
 		String sql ="Delete from bookrequest where member_book_id="+id;
 		Statement st;
@@ -41,6 +44,7 @@ public class DeleteOperation implements BookOperation, IObservable {
 		}		
 	}
 
+    // This method computes list of members to be notified of the addition of a book and add them to the observers list (variable members here) as a part of the Observer Pattern.
 	public void addSubscribers(){
 		try {
 			Statement st = DatabaseConnection.connectionRequest().createStatement();
@@ -64,6 +68,7 @@ public class DeleteOperation implements BookOperation, IObservable {
 	}
 	
 	
+	//This method calls notify method on all the observers as a part of the Observer Pattern
 	@Override
 	public void notifyAllSubscribers() {
 		for(int i=0;i<members.size();i++){

@@ -12,7 +12,7 @@ public class NullSearch implements SearchOperation {
 	@Override
 	public ResultSet doSearch(String name) {
 		String sql = "SELECT * "
-				+ "FROM nullsearch";
+				+ "FROM nullreference";
 		return DBHelper.getQueryResult(sql);
 	}
 

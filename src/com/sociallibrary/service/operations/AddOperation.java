@@ -11,7 +11,8 @@ import com.sociallibrary.domain.Book;
 import com.sociallibrary.domain.CurrentSession;
 import com.sociallibrary.domain.Member;
 
-public class AddOperation implements BookOperation, IObservable{
+//This class acts as a Concrete Command of the Command Pattern and Observable of Observer Pattern
+public class AddOperation implements BookOperation{
 	Book book;
 	private ArrayList<Member> members=new ArrayList<Member>();
 
@@ -21,13 +22,14 @@ public class AddOperation implements BookOperation, IObservable{
 
 	@Override
 	public void execute() {
+		//Macro- these 4 lines of code give the sequence of actions to be performed. Hence command pattern was used.
 		bo.addBook(book);
 		updateRating();
 		addSubscribers();
 		notifyAllSubscribers();
 	}
 
-
+    // This method computes list of members to be notified of the addition of a book and add them to the observers list (variable members here) as a part of the Observer Pattern.
 	public void addSubscribers(){
 		try {
 			Statement st = DatabaseConnection.connectionRequest().createStatement();
@@ -51,7 +53,8 @@ public class AddOperation implements BookOperation, IObservable{
 			e.printStackTrace();
 		}
 	}
-
+   
+	//This method is one of the actions to be performed after the addition of a book happens
 	public void updateRating(){
 		String sql= "Select memberrating "
 				+ "from memberbooks mb,books b "
@@ -84,6 +87,7 @@ public class AddOperation implements BookOperation, IObservable{
 		}		
 	}
 
+	//This method calls notify method on all the observers as a part of the Observer Pattern
 	public void notifyAllSubscribers(){
 		for(int i=0;i<members.size();i++){
 			members.get(i).notify(book.getBookName(),"add");

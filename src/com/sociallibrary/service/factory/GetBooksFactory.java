@@ -7,7 +7,7 @@ import com.sociallibrary.GetUserRelatedBooks;
 import com.sociallibrary.GetUserRequestedBooks;
 
 public class GetBooksFactory {
-	
+	//This method takes care of creating an instance based on the bookType. This is a Factory method.
 	public GetUserRelatedBooks createBookList(String bookType){
 		if(bookType.equals("OwnedBooks")){
 			return new GetUserOwnedBooks();

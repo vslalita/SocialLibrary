@@ -91,6 +91,14 @@
 					   
 				  <%} %>
 				  
+				  <%ResultSet nullresult=(ResultSet)request.getAttribute("nullresult"); %>
+				   <%if(nullresult!=null){
+					  while(nullresult.next()){
+						  %>
+						  <%=nullresult.getString("nullvalu") %>
+					  <%}%>
+					   
+				  <%} %>
 				</div>
 			</div>
 			</div>

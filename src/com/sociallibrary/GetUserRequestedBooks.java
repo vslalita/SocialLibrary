@@ -5,7 +5,8 @@ import java.sql.*;
 import com.sociallibrary.db.DBHelper;
 
 public class GetUserRequestedBooks implements GetUserRelatedBooks {
-
+   
+	//This method has the implementation that retrieves the list of books requested by the member bearing the id; parameter id
 	@Override
 	public ResultSet getBooks(int id) {
 		

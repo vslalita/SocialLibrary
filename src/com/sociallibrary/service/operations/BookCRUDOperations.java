@@ -86,21 +86,7 @@ public class BookCRUDOperations {
 		return 0;
 	}    
 	
-	public boolean deleteBook(Book book){
-		Statement st;
-		try {
-			st = DatabaseConnection.connectionRequest().createStatement();
-			String sql="Delete from memberbooks "
-					 + "where book_id in (Select id from books where ISBN="+book.getBookISBN()+" "
-					 		+ "and owner_id="+CurrentSession.getMember().getId()+")";
-			st.executeUpdate(sql);
-			return true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-	
+	//This method is to delete book based on the id 
 	public void deleteBook(int memberBookid){
 		Statement st;
 		try {
@@ -113,6 +99,8 @@ public class BookCRUDOperations {
 		}
 	}
 	
+	
+	//This method is to place a request based on the id
 	public boolean requestBook(int memberBookId){
 		Statement st;
 		try {
@@ -142,6 +130,7 @@ public class BookCRUDOperations {
 	}
 	
 	
+	//This method delegates the update request based on what is to be requested.
 	public void updateBook(String updateAction,int id){
 		if(updateAction.equals("availability")){
 			IUpdateTemplate update=new UpdateBookAvailability();

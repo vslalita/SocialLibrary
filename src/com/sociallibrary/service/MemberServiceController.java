@@ -186,4 +186,9 @@ public class MemberServiceController {
 		DBHelper.executeDMLQuery(sql);
 	}
 	
+	public void signout(){
+		CurrentSession.resetCurrentMember();
+		System.out.println("Signed out");
+	}
+	
 }

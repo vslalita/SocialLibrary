@@ -35,6 +35,10 @@ public class AddDeleteOperationServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		OperationsFacade of=new OperationsFacade();
 		
+		if(request.getParameter("operation")!=null && request.getParameter("operation").equals("CancelAll")){
+			of.removeOperations();
+			System.out.println("removed");
+		}
 		if(request.getParameter("operation")!=null && request.getParameter("operation").equals("ExecuteAll")){
 			of.executeRequests();
 			System.out.println("Executed");

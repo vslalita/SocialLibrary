@@ -4,64 +4,41 @@ import java.util.ArrayList;
 
 import com.sociallibrary.domain.Book;
 
+//This class acts as an invoker
 public class OperationRequestor {
-  private ArrayList<BookOperation> operationsList=new ArrayList<BookOperation>();
+	
+ //OperationsList maintains the list of operations that are to be queued up.	
+  private static ArrayList<BookOperation> operationsList=new ArrayList<BookOperation>();
+  
+  //These static variables are maintained just to store and display the details of the books that are to be deleted and requested to the user.Does not play much role in Command Pattern.
   public static ArrayList<Book> addBooks=new ArrayList<Book>();
   public static ArrayList<Integer> deleteBooks=new ArrayList<Integer>();
   public static ArrayList<Integer> requestBooks=new ArrayList<Integer>();
-  public static ArrayList<String[]> updateBooks=new ArrayList<String[]>();
+
+  //Method to queue delete and request operations through operationsList
+  public void addOperation(BookOperation operation){
+	  operationsList.add(operation);
+  }
   
-  public void addBookOperations(){
-	  if(addBooks.size()>0){
-		  for(int i=0;i<addBooks.size();i++){
-			  operationsList.add(new AddOperation(addBooks.get(i)));
-			  addBooks.remove(i);
-		  }
+  //Method to remove all the operations if the user wants to cancel all the deletes or requests.
+  public void removeOperations(){
+	  for(int i=0;i< OperationRequestor.deleteBooks.size();i++){
+			OperationRequestor.deleteBooks.remove(i);
+		}
+		for(int i=0;i< OperationRequestor.requestBooks.size();i++){
+			OperationRequestor.requestBooks.remove(i);
+		}
+	  for(int i=0;i<operationsList.size();i++){
+		  operationsList.remove(i);
 	  }
   }
   
-  public void updateBookOperations(){
-	  if(updateBooks.size()>0){
-		  for(int i=0;i<updateBooks.size();i++){
-			  operationsList.add(new UpdateOperation(updateBooks.get(i)[0],Integer.valueOf(updateBooks.get(i)[1])));
-			  updateBooks.remove(i);
-		  }
-	  }
-  }
-  
-  public void deleteBookOperations(){
-	  if(deleteBooks.size()>0){
-		  for(int i=0;i<deleteBooks.size();i++){
-			  operationsList.add(new DeleteOperation(deleteBooks.get(i)));
-			  deleteBooks.remove(i);
-		  }
-	  }
-  }
-  
-  public void requestBookOperations(){
-	  if(requestBooks.size()>0){
-		  for(int i=0;i<requestBooks.size();i++){
-			  operationsList.add(new RequestOperation(requestBooks.get(i)));
-			  requestBooks.remove(i);
-		  }
-	  }
-  }
-  
-  public void takeRequest(){
-	  this.addBookOperations();
-	  this.deleteBookOperations();
-	  this.requestBookOperations();
-	  this.updateBookOperations();
-  }
-  
-  public void executeUpdate(){
-	  
-  }
-  
+  //Calls an execute over the operations which are queued up
   public void runRequests(){
 	  for(int i=0;i<operationsList.size();i++){
 		  operationsList.get(i).execute();
 	  }
+	  removeOperations();
   }
   
   

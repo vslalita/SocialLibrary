@@ -155,7 +155,7 @@
 			</div>
 			<div class="row">
 			 <a href="/SocialLibrary/AddDeleteOperationServlet?operation=ExecuteAll"><button type="button" class="btn btn-warning">Execute all</button></a>
-			
+			  <a href="/SocialLibrary/AddDeleteOperationServlet?operation=CancelAll"><button type="button" class="btn btn-warning">Cancel all</button></a>
 			</div>
 		</div>
 	</div>

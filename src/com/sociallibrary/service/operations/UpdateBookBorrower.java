@@ -8,8 +8,10 @@ import com.sociallibrary.db.DBHelper;
 import com.sociallibrary.db.DatabaseConnection;
 import com.sociallibrary.domain.CurrentSession;
 
+//This class provides an implementation for the abstract methods of IUpdateTemplate
 public class UpdateBookBorrower extends IUpdateTemplate{
-
+    
+	//This method validates if the user updating the book is an owner or a borrower of the book
 	public boolean validate(){
 		Statement st;
 		try {
@@ -29,7 +31,7 @@ public class UpdateBookBorrower extends IUpdateTemplate{
 		return false;
 	}
 	
-	
+	//Updates the borrower of the book
 	@Override
 	public boolean update() {
 			try {
