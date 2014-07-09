@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SocialLibrary</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_book_list">BookListActivity</string>
+    <string name="title_activity_create_book">CreateBookActivity</string>
+    <string name="title_activity_book_detail">BookDetailActivity</string>
+    <string name="title_activity_books_availability">BooksAvailabilityActivity</string>
+    <string name="title_activity_user_current_book">UserCurrentBookActivity</string>
+    <string name="title_activity_user_detail">UserDetailActivity</string>
+    <string name="title_activity_user_contact">UserContactActivity</string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
+    <string name="title_activity_login_sign_up">LoginSignUpActivity</string>
+
+</resources>
