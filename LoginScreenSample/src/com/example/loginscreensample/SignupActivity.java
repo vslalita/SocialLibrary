@@ -38,20 +38,20 @@ public class SignupActivity extends Activity {
 
 		ParseObject registrationpage = new ParseObject("registrationPage");
 
-		if (usernameregister.getText().toString().equals(" ")
-				|| passwordregister.getText().toString().equals(" ")
-				|| confirmpassword.getText().toString().equals(" ")
-				|| firstname.getText().toString().equals(" ")
-				|| lastname.getText().toString().equals(" ")
-				|| email.getText().toString().equals(" ")
-				|| contact.getText().toString().equals(" ")) {
+		if ((usernameregister.getText().toString().length() == 0)
+				|| ( passwordregister.getText().toString().length() == 0)
+				|| (confirmpassword.getText().toString().length() == 0)
+				|| (firstname.getText().toString().length() == 0)
+				|| (lastname.getText().toString().length() == 0)
+				|| (email.getText().toString().length() == 0)
+				|| (contact.getText().toString().length() == 0)) {
 			Toast.makeText(getApplicationContext(),
 					"Every detail is mandatory", Toast.LENGTH_SHORT).show();
 			//register.setEnabled(false);
 		}
 
-		else if (passwordregister.getText().toString() != confirmpassword
-				.getText().toString()) {
+		else if (!passwordregister.getText().toString().equals(confirmpassword
+				.getText().toString())) {
 			Toast.makeText(getApplicationContext(),
 					"Password and Confirm Password aren't same",
 					Toast.LENGTH_SHORT).show();
@@ -59,16 +59,19 @@ public class SignupActivity extends Activity {
 
 			registrationpage.put("userName", usernameregister.getText()
 					.toString());
-			registrationpage.put("passwordregister", passwordregister.getText()
+			registrationpage.put("password", passwordregister.getText()
 					.toString());
 			registrationpage.put("confirmPassword", confirmpassword.getText()
 					.toString());
 			registrationpage.put("firstName", firstname.getText().toString());
 			registrationpage.put("lastName", lastname.getText().toString());
-			registrationpage.put("eMail", email.getText().toString()
-					.equals(" "));
-			registrationpage.put("contactNumber", contact.getText().toString());
-
+			registrationpage.put("eMail", email.getText().toString());
+			registrationpage.put("contactNumber", Integer.valueOf(contact.getText().toString()));
+			registrationpage.saveInBackground();
+			Toast.makeText(getApplicationContext(),
+					"You are now registered",
+					Toast.LENGTH_SHORT).show();
+			
 		}
 	}
 }
