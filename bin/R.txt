@@ -235,6 +235,8 @@ int drawable abc_textfield_searchview_holo_light 0x7f020054
 int drawable abc_textfield_searchview_right_holo_dark 0x7f020055
 int drawable abc_textfield_searchview_right_holo_light 0x7f020056
 int drawable ic_launcher 0x7f020057
+int id BookImageGridView 0x7f050040
+int id BookNameGridView 0x7f050041
 int id BooksGridView 0x7f05003f
 int id CreateBookView 0x7f05003d
 int id CurrentBookDetailView 0x7f05003e
@@ -250,7 +252,7 @@ int id action_context_bar 0x7f05001d
 int id action_menu_divider 0x7f050016
 int id action_menu_presenter 0x7f050017
 int id action_mode_close_button 0x7f050024
-int id action_settings 0x7f050040
+int id action_settings 0x7f050042
 int id activity_chooser_view_content 0x7f050025
 int id always 0x7f05000b
 int id beginning 0x7f050011
@@ -335,7 +337,8 @@ int layout activity_sign_up 0x7f03001e
 int layout activity_user_contact 0x7f03001f
 int layout activity_user_current_book 0x7f030020
 int layout activity_user_detail 0x7f030021
-int layout support_simple_spinner_dropdown_item 0x7f030022
+int layout book_grid_view 0x7f030022
+int layout support_simple_spinner_dropdown_item 0x7f030023
 int menu book_detail 0x7f0c0000
 int menu book_list 0x7f0c0001
 int menu books_availability 0x7f0c0002
