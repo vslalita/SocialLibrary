@@ -11,8 +11,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.parse.GetCallback;
 import com.parse.Parse;
 import com.parse.ParseAnalytics;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 public class MainActivity extends Activity {
 
@@ -36,10 +40,23 @@ public class MainActivity extends Activity {
 	}
 	
 	public void login (View view){
-		if(username.getText().toString().equals("admin") && password.getText().toString().equals("admin")){
-			Toast.makeText(getApplicationContext(), "Redirecting...",Toast.LENGTH_SHORT).show();
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("GameScore");
+		query.getInBackground("xWMyZ4YEGZ", new GetCallback<ParseObject>() {
+		  public void done(ParseObject object, ParseException e) {
+		    if (e == null) {
+		      // object will be your game score
+		    } else {
+		      // something went wrong
+		    }
+		  }
+		});
+		
+		if(username.getText().toString().length()== 0  && password.getText().toString().length( )== 0){
+			Toast.makeText(getApplicationContext(), "Enter the credentials",Toast.LENGTH_SHORT).show();
 		}
-		else{
+		else if (){
+			
+			// if credentials are wrong counter decrements
 		      Toast.makeText(getApplicationContext(), "Wrong Credentials",
 		    	      Toast.LENGTH_SHORT).show();
 		    	      attempts.setBackgroundColor(Color.RED);	
@@ -48,6 +65,9 @@ public class MainActivity extends Activity {
 		    	      if(counter==0){
 		    	          login.setEnabled(false);
 		    	       }	
+		    	      else {
+		    	    	  //login and redirect to BookListActivity
+		    	      }
 		}
 	}
 	
