@@ -1,20 +1,21 @@
 package com.example.loginscreensample;
 
+import java.util.Arrays;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.parse.GetCallback;
 import com.parse.Parse;
-import com.parse.ParseAnalytics;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
@@ -25,6 +26,7 @@ public class MainActivity extends Activity {
 	private Button login;
 	private TextView attempts;
 	private TextView signup;
+	List<ParseObject> results;
 	int counter = 3;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,32 +43,38 @@ public class MainActivity extends Activity {
 	
 	public void login (View view){
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("GameScore");
-		query.getInBackground("xWMyZ4YEGZ", new GetCallback<ParseObject>() {
-		  public void done(ParseObject object, ParseException e) {
-		    if (e == null) {
-		      // object will be your game score
-		    } else {
-		      // something went wrong
-		    }
-		  }
-		});
+		query.selectKeys(Arrays.asList("userName", "password"));
+		
+		try {
+			results = query.find();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 		if(username.getText().toString().length()== 0  && password.getText().toString().length( )== 0){
 			Toast.makeText(getApplicationContext(), "Enter the credentials",Toast.LENGTH_SHORT).show();
 		}
-		else if (){
+		
+		else if (results.contains(username) && results.contains(password)){
 			
-			// if credentials are wrong counter decrements
-		      Toast.makeText(getApplicationContext(), "Wrong Credentials",
-		    	      Toast.LENGTH_SHORT).show();
-		    	      attempts.setBackgroundColor(Color.RED);	
-		    	      counter--;
-		    	      attempts.setText(Integer.toString(counter));
-		    	      if(counter==0){
-		    	          login.setEnabled(false);
+			
+			Intent launchActivity1= new Intent(MainActivity.this,SignupActivity.class);
+	         startActivity(launchActivity1);
+		
+		  
 		    	       }	
+		
 		    	      else {
-		    	    	  //login and redirect to BookListActivity
+		    	    		// if credentials are wrong counter decrements
+		    	    	    Toast.makeText(getApplicationContext(), "Wrong Credentials",
+		    			    	      Toast.LENGTH_SHORT).show();
+		    			    	      attempts.setBackgroundColor(Color.RED);	
+		    			    	      counter--;
+		    			    	      attempts.setText(Integer.toString(counter));
+		    			    	      if(counter==0){
+		    			    	          login.setEnabled(false);
 		    	      }
 		}
 	}
