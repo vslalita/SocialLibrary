@@ -26,7 +26,7 @@ public class MainActivity extends Activity {
 	private Button login;
 	private TextView attempts;
 	private TextView signup;
-	List<ParseObject> results;
+	ArrayList<ParseObject> results;
 	int counter = 3;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +46,7 @@ public class MainActivity extends Activity {
 		query.selectKeys(Arrays.asList("userName", "password"));
 		
 		try {
-			results = query.find();
+			results = (ArrayList<ParseObject>)query.find();
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -56,8 +56,8 @@ public class MainActivity extends Activity {
 		if(username.getText().toString().length()== 0  && password.getText().toString().length( )== 0){
 			Toast.makeText(getApplicationContext(), "Enter the credentials",Toast.LENGTH_SHORT).show();
 		}
-		
-		else if (results.contains(username) && results.contains(password)){
+		ParseObject userCredentials=results.get(0);
+		else if (userCredentials.getString("userName").equals() && userCredentials.getString("password")){
 			
 			
 			Intent launchActivity1= new Intent(MainActivity.this,SignupActivity.class);
