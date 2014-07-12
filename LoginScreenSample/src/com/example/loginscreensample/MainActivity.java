@@ -57,7 +57,7 @@ public class MainActivity extends Activity {
 			Toast.makeText(getApplicationContext(), "Enter the credentials",Toast.LENGTH_SHORT).show();
 		}
 		ParseObject userCredentials=results.get(0);
-		else if (userCredentials.getString("userName").equals() && userCredentials.getString("password")){
+		else if (userCredentials.getString("userName").equals(username.getText().toString()) && userCredentials.getString("password").equals(password.getText().toString())){
 			
 			
 			Intent launchActivity1= new Intent(MainActivity.this,SignupActivity.class);
