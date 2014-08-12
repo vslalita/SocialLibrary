@@ -9,8 +9,7 @@ import java.util.ArrayList;
 public class BookSearch implements SearchOperation{
 	JDBCConnectionFactory factory= JDBCConnectionFactory.getFactory();
 	Statement statement = null;
-	Connection connection = null;
-	connection=factory.setConnection();
+	Connection connection = factory.setConnection();
 	@Override
 	public ArrayList<String> doSearch(String name, String type) {
 		// TODO Auto-generated method stub
