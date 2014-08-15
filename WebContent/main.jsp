@@ -43,16 +43,14 @@ p {
 <title>Social Library</title>
 </head>
 <body>
-
-
-	<div id="page-wrap" class="jumbotron page-header"
+ 
+	<div id="page-wrap" class="page-header"
 		style="background-color: #f0ad4e;">
 		<img src="http://www.mtzion.lib.il.us/logo15.jpg/image_preview">
 		<strong><large> Social Library</large></strong> </img>
 	</div>
-	<div class="container ">
-		<div class="row">
-			<div class="col-md-4 container">
+		<div class="row container">
+			<div class="col-md-4  container">
 				<form action="MainPage" role="form" method="POST">
 					<div class="form-group">
 						<label for="exampleInputEmail1">Username</label> <input
@@ -77,7 +75,6 @@ p {
 				Get started by registering and creating a group. </large>
 			</div>
 		</div>
-	</div>
+	
 </body>
-</div>
 </html>

@@ -14,7 +14,7 @@ public class MemberOperations {
 				return false;
 			}
 			else{
-				int newMemberId=st.executeUpdate("Insert into members (firstname,lastname,username,password,address,email) "
+				st.executeUpdate("Insert into members (firstname,lastname,username,password,address,email) "
 						+ "values('"+member.firstName+"',"+"'"+member.lastName+"','"+member.username+"','"+member.password+"','"+member.address+"','"+member.Email+"')");
 				return true;
 			}
@@ -79,7 +79,6 @@ public class MemberOperations {
 		return false;
 	}
 
-
 	public ResultSet getgroups(){
 		Statement st;
 		try {
@@ -97,8 +96,23 @@ public class MemberOperations {
 			e.printStackTrace();
 		}
 		return null;
-		
 	}
 	
-	
+	public ResultSet getMemberInfo(int id){
+		try {
+			Statement st = DatabaseConnection.databaseInstance.conn.createStatement();
+			ResultSet member=st.executeQuery("Select * "
+                    + "from members "
+                    + "where id="+id);
+			if(SqlOperations.getCount(member)>0){
+				member.beforeFirst();
+				return member;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
 }

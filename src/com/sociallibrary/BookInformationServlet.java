@@ -2,7 +2,7 @@ package com.sociallibrary;
 
 import java.io.IOException;
 import java.sql.ResultSet;
-import java.util.ArrayList;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,16 +11,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class HomeServlet
+ * Servlet implementation class BookInformationServlet
  */
-@WebServlet("/HomeServlet")
-public class HomeServlet extends HttpServlet {
+@WebServlet("/BookInformationServlet")
+public class BookInformationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public HomeServlet() {
+    public BookInformationServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,25 +30,29 @@ public class HomeServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//request.setAttribute("name", CurrentMember.cm.current_member.firstName+" "+CurrentMember.cm.current_member.lastName);
-		MemberOperations mo=new MemberOperations();
+		
+		int memberbookId=Integer.valueOf(request.getParameter("id"));
 		BookOperations bo=new BookOperations();
-		bo.setTypeofBooks(new GetCurrentUserOwnedBooks());
-		ResultSet myBooks=bo.getTypeBooks();
-		bo.setTypeofBooks(new GetCurrentUserBorrowedBooks());
-		ResultSet myBorrowedBooks=bo.getTypeBooks();
-		ResultSet myGroups=mo.getgroups();
+		MemberOperations mo=new MemberOperations();
+		ResultSet bookDetails =bo.getBookbyId(memberbookId);
+		request.setAttribute("book", bookDetails);
 		
-		
+		try {
+			bookDetails.first();
+			ResultSet Owner=mo.getMemberInfo(bookDetails.getInt("owner_id"));
+			ResultSet Borrower=mo.getMemberInfo(bookDetails.getInt("borrower_id"));
+			request.setAttribute("owner", Owner);
+			request.setAttribute("borrower", Borrower);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		request.setAttribute("name",CurrentMember.cm.current_member.firstName+" "+CurrentMember.cm.current_member.lastName);
 		request.setAttribute("address",CurrentMember.cm.current_member.address);
 		request.setAttribute("email",CurrentMember.cm.current_member.Email);
 		request.setAttribute("member", CurrentMember.cm.current_member);
-        request.setAttribute("ownedbooks", myBooks);
-        request.setAttribute("groups", myGroups);
-		request.setAttribute("borrowedbooks", myBorrowedBooks);
-        
-        getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
+		getServletContext().getRequestDispatcher("/book_info.jsp").forward(request, response);
+		
 	}
 
 	/**

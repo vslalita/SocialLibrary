@@ -66,9 +66,9 @@ public class MainPage extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		MemberOperations mo=new MemberOperations();
 		response.setContentType("HTML");
-		PrintWriter out=response.getWriter();
+		//PrintWriter out=response.getWriter();
 
-		if(mo.login(request.getParameter("username"), request.getParameter("password"))){
+		if(mo.login(request.getParameter("username"),request.getParameter("password"))){
 			request.setAttribute("name",CurrentMember.cm.current_member.firstName+" "+CurrentMember.cm.current_member.lastName);
 			request.setAttribute("address",CurrentMember.cm.current_member.address);
 			request.setAttribute("email",CurrentMember.cm.current_member.Email);
@@ -76,9 +76,12 @@ public class MainPage extends HttpServlet {
 			BookOperations bo=new BookOperations();
 			ResultSet myBooks=bo.getMyBooks();
 			ResultSet myGroups=mo.getgroups();
+			ResultSet myBorrowedBooks=bo.getMyBorrowedBooks();
 			
             request.setAttribute("ownedbooks", myBooks);
             request.setAttribute("groups", myGroups);
+            request.setAttribute("borrowedbooks", myBorrowedBooks);
+            
 			getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
 		}
 		else{

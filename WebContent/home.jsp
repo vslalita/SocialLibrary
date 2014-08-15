@@ -14,12 +14,13 @@
 <body>
 	<div class="jumbotron page-header" style="background-color: #f0ad4e;">
 		<img src="http://www.mtzion.lib.il.us/logo15.jpg/image_preview">
-		<strong><large> Social Library</large></strong> </img>
+		<strong><large> Social Library</large></strong> 
 
 	</div>
 
 	<div class="row container-fluid">
 		<div class="col-md-4 container-fluid">
+			<%@page import="com.sociallibrary.*"%>
 			Profile Information<br> Name:<%=request.getAttribute("name").toString()%><br>
 			Address:<%=request.getAttribute("address").toString()%><br>
 			E-Mail:<%=request.getAttribute("email").toString()%><br>
@@ -72,18 +73,19 @@
 							<div id="collapseOne" class="panel-collapse collapse in">
 								<div class="panel-body">
 									<div class="container-fluid">
+
 										<%
 											try {
 												while (rs.next()) {
+											 String url="/SocialLibrary/BookInformationServlet?id="+rs.getInt("memberbookid");
 										%>
-										<%=rs.getString("bookname")%><br>
-										<%
+										<a href=<%=url%>> <%=rs.getString("bookname")%><br> <%
 											}
 											} catch (SQLException e) {
 												// TODO Auto-generated catch block
 												e.printStackTrace();
 											}
-										%>
+										%></a>
 									</div>
 								</div>
 							</div>
@@ -104,13 +106,46 @@
 								<div class="panel-body">
 
 									<%
-											ResultSet mygroups = (ResultSet) request.getAttribute("groups");
+										ResultSet mygroups = (ResultSet) request.getAttribute("groups");
+									%>
+									<%
+										try {
+											while (mygroups.next()) {
+									%>
+									<%=mygroups.getString("groupname")%><br>
+									<%
+										}
+										} catch (SQLException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
+									%>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row container">
+					<div class="col-md-8">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion"
+										href="#collapseThree"><strong><large>Books
+											Borrowed </large></strong> <br></a>
+								</h4>
+							</div>
+							<div id="collapseThree" class="panel-collapse collapse">
+								<div class="panel-body">
+
+									<%
+											ResultSet borrowedBooks = (ResultSet) request.getAttribute("borrowedbooks");
 									%>
 									<%
 											try {
-												while (mygroups.next()) {
+												while (borrowedBooks.next()) {
 									%>
-									<%=mygroups.getString("groupname")%><br>
+									<%=borrowedBooks.getString("bookname")%><br>
 									<%
 											}
 											} catch (SQLException e) {
@@ -123,15 +158,8 @@
 						</div>
 					</div>
 				</div>
-				<div class="row container">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h4 class="panel-title">
-								<a data-toggle="collapse" data-parent="#accordion"
-									href="#collapseThree"> Recently Added Book</a>
-							</h4>
-						</div>
-					</div>
-				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

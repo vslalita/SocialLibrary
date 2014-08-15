@@ -7,8 +7,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class BookOperations {
-    
-	// Method to add create new Books for a group. If a book already exists a record is created only in 'memberbooks' table.
+    GetCurrentUserRelatedBooks booksType;
+	
+    // Method to add create new Books for a group. If a book already exists a record is created only in 'memberbooks' table.
 	public void addBook(Book book){
 		try {
 			Statement st = DatabaseConnection.databaseInstance.conn.createStatement();
@@ -84,29 +85,7 @@ public class BookOperations {
 	}
 
 	
-	//gets the list of books the user owns
-	public ResultSet getMyBooks(){
-		try {
-			Statement st = DatabaseConnection.databaseInstance.conn.createStatement();
-			int id=CurrentMember.cm.current_member.id;
-			String sql="Select * "
-					+ "from memberbooks mb,books b "
-					+ "where mb.owner_id="+CurrentMember.cm.current_member.id
-					+ " and mb.book_id=b.id";
-			ResultSet myBooks=st.executeQuery(sql);
-		
-			if(SqlOperations.getCount(myBooks)>0){
-				myBooks.beforeFirst();
-				return myBooks;
-			}
-			else{
-				return null;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+	
     
 	//gets the list of books the user borrowed.
 	public ResultSet getMyBorrowedBooks(){
@@ -114,10 +93,12 @@ public class BookOperations {
 			Statement st = DatabaseConnection.databaseInstance.conn.createStatement();
 			String sql="Select * "
 					+ "from memberbooks mb,books b "
-					+ "where mb.borrower_id="+CurrentMember.cm.current_member.id
+					+ "where mb.borrower_id="+CurrentMember.cm.current_member.id+" "
 					+ "and mb.book_id=b.id";
 			ResultSet myBorrowedBooks=st.executeQuery(sql);
+			
 			if(SqlOperations.getCount(myBorrowedBooks)>0){
+				myBorrowedBooks.beforeFirst();
 				return myBorrowedBooks;
 			}
 			else{
@@ -169,8 +150,31 @@ public class BookOperations {
 	}
 
 	public ResultSet getBooks(){
-        
+		return null;
+	}
+	
+	public ResultSet getBookbyId(int id){
+		try {
+			Statement st = DatabaseConnection.databaseInstance.conn.createStatement();
+			String sql="Select * from books b,memberbooks mb where mb.book_id=b.id and mb.id="+id;
+			ResultSet bookInfo=st.executeQuery(sql);
+			if(SqlOperations.getCount(bookInfo)>0){
+				bookInfo.beforeFirst();
+				return bookInfo;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 
+	public void setTypeofBooks(GetCurrentUserRelatedBooks booksType){
+		this.booksType=booksType;
+	}
+	
+	public ResultSet getTypeBooks(){
+		return booksType.getBooks();
+	}
+	
 }
