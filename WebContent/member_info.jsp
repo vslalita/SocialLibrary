@@ -1,14 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/custom.css" rel="stylesheet">
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Social Library</title>
+<title>Insert title here</title>
 </head>
 <body>
 	<div class="jumbotron page-header" style="background-color: #f0ad4e;">
@@ -52,23 +48,7 @@
 				</div>
 				</nav>
 				<div class="row container">
-                      <table class="table">
-                       <tr> 
-                         <th>Group Name </th>
-                         <th>Member Name </th>
-                       </tr>
-                       <%@page import="java.sql.*" %>
-                       <% ResultSet groupInfo=(ResultSet)request.getAttribute("groupinfo"); 
-                        if(groupInfo!=null){
-                        	while(groupInfo.next()){
-                        	String url="/SocialLibrary/MemberInfoServlet?id="+groupInfo.getInt("member_id");
-                        	%>
-                        	<tr> 
-                        	      <td><%=groupInfo.getString("groupname") %> </td>
-                        	     <td><a href=<%=url %>><%= groupInfo.getString("firstname")+groupInfo.getString("lastname") %></a>  </td>
-                        	</tr>
-                        	<% }}%>
-                      </table>
+                      <%@page import="java.sql.*" %>
                     
                     </div>
 			</div>

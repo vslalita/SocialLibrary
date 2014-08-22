@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class RegisterServlet
+ * Servlet implementation class CreateGroupServlet
  */
-@WebServlet("/RegisterServlet")
-public class RegisterServlet extends HttpServlet {
+@WebServlet("/CreateGroupServlet")
+public class CreateGroupServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RegisterServlet() {
+    public CreateGroupServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,19 +27,17 @@ public class RegisterServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		Member user=new Member(request.getParameter("firstname"),request.getParameter("lastname"),request.getParameter("address"),request.getParameter("email"),request.getParameter("username"),request.getParameter("password"));
-		if(MemberServiceController.memberServicecontroller.register(user)){
-			getServletContext().getRequestDispatcher("/main.jsp").forward(request,response);
-		};
-		
-		
+		String groupname=request.getParameter("groupname");
+		MemberServiceController.getInstance().createGroup(groupname);
 	}
 
 }

@@ -26,6 +26,10 @@
 			E-Mail:<%=request.getAttribute("email").toString()%><br>
 		</div>
 		<div class="col-md-8">
+		     <div class="row">
+		     <a href="/SocialLibrary/create_group.jsp"><button type="button" class="btn btn-warning">Create Group</button></a>
+		     </div> <br><br>
+		     
 			<div class="row">
 				<nav class="navbar navbar-default" role="navigation">
 				<div class="container-fluid">
@@ -45,8 +49,8 @@
 						<ul class="nav navbar-nav">
 							<li class="active"><a href="/SocialLibrary/HomeServlet">Home</a></li>
 							<li><a href="/SocialLibrary/MemberBooksServlet">Books</a></li>
-							<li><a href="#">Groups</a></li>
-							<li><a href="#">Add/Delete</a></li>
+							<li><a href="/SocialLibrary/GroupServlet">Groups</a></li>
+							<li><a href="/SocialLibrary/AddDeleteOperationServlet">Add/Delete</a></li>
 						</ul>
 					</div>
 					<!-- /.navbar-collapse -->
@@ -73,19 +77,74 @@
 							<div id="collapseOne" class="panel-collapse collapse in">
 								<div class="panel-body">
 									<div class="container-fluid">
-
+                                      <table class="table">
+                                      <tr>
+                                        <th> Book Name</th>
+                                        
+                                      </tr>
+                                      
 										<%
-											try {
-												while (rs.next()) {
+											try { 
+												
+										while (rs.next()) {
 											 String url="/SocialLibrary/BookInformationServlet?id="+rs.getInt("memberbookid");
+											 String operationUrl="/SocialLibrary/HomeServlet?id="+rs.getInt("memberbookid")+"&operation=Delete";
 										%>
-										<a href=<%=url%>> <%=rs.getString("bookname")%><br> <%
+										<tr><td>
+										<a href=<%=url%>> <%=rs.getString("bookname")%></a></td>
+										<td><a href=<%=operationUrl %>><button type="button" class="btn btn-warning">Delete</button></a></td></tr>
+										<%
 											}
 											} catch (SQLException e) {
 												// TODO Auto-generated catch block
 												e.printStackTrace();
 											}
-										%></a>
+										%></table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row container">
+				<div class="col-md-8 container">
+
+					<div class="panel-group" id="accordion">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion"
+										href="#collapseOne"> <strong><large>Books
+											You Requested</large></strong>
+									</a>
+								</h4>
+							</div>
+							<div id="collapseOne" class="panel-collapse collapse in">
+								<div class="panel-body">
+									<div class="container-fluid">
+                                      <table class="table">
+                                      <tr>
+                                        <th> Book Name</th>
+                                        
+                                      </tr>
+                                      <tr><td>
+										<%
+										ResultSet myrequestedBooks = (ResultSet) request.getAttribute("requestedbooks");
+									%>
+									<%
+										try {
+											while (myrequestedBooks.next()) {
+												String url="/SocialLibrary/BookInformationServlet?id="+myrequestedBooks.getInt("member_book_id");
+									%>
+									<a href=<%=url%>><%=myrequestedBooks.getString("bookname")%></a><br>
+									<%
+										}
+										} catch (SQLException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
+									%></td></tr>
+										</table>
 									</div>
 								</div>
 							</div>

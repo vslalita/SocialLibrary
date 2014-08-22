@@ -4,8 +4,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class MemberOperations {
+public class MemberServiceController {
+	static MemberServiceController memberServicecontroller=null;
+	private MemberServiceController(){
+	}
 
+	public static MemberServiceController getInstance(){
+		if(memberServicecontroller==null){
+			memberServicecontroller=new MemberServiceController();
+			return memberServicecontroller;
+		}
+		return memberServicecontroller;
+	}
+
+	 
 	public boolean register(Member member){
 		try {
 			Statement st = DatabaseConnection.databaseInstance.conn.createStatement();
@@ -26,7 +38,7 @@ public class MemberOperations {
 		return false;
 	}
 
-	
+
 	public int validate(String username,String password){
 		Statement st;
 		try {
@@ -80,23 +92,63 @@ public class MemberOperations {
 	}
 
 	public ResultSet getgroups(){
-		Statement st;
+		
+		String sql="Select * "
+				+ "from groups g, membergroups mg "
+				+ "where g.id=mg.group_id "
+				+  "and member_id="+CurrentMember.cm.current_member.id;
+		
+		return SqlOperations.getQueryResult(sql);
+		
+	}
+
+	public void createGroup(String groupname){
 		try {
-			st = DatabaseConnection.databaseInstance.conn.createStatement();
-			ResultSet myGroups=st.executeQuery("Select * "
-                    + "from groups g, membergroups mg "
-                    + "where g.id=mg.group_id "
-                    +  "and member_id="+CurrentMember.cm.current_member.id);
-			if(SqlOperations.getCount(myGroups)>0){
-				myGroups.beforeFirst();
-				return myGroups;
+			Statement st = DatabaseConnection.databaseInstance.conn.createStatement();
+			ResultSet validateGroup=st.executeQuery("Select * from groups where groupname='"+groupname+"'");
+			if(SqlOperations.getCount(validateGroup)==0){
+				String sql="Insert into groups(groupname) values ('"+groupname+"')";
+				st.executeUpdate(sql);
+				joinGroup(groupname,CurrentMember.cm.current_member.id);
+			}	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public ResultSet viewMemberDetails(int memberId){
+		String sql="Select * "
+				+ "from members m, membergroups mg, groups g "
+				+ "where mg.member_id=m.id "
+				+ "and g.id=mg.group_id "
+				+ "and mg.member_id="+memberId;
+       return SqlOperations.getQueryResult(sql);
+	}
+
+	public void joinGroup(String groupname,int id){
+		try {
+			Statement st=DatabaseConnection.databaseInstance.conn.createStatement();
+			String sql="select * "
+					+ "from membergroups mg,groups g "
+					+ "where g.id=mg.group_id "
+					+ "and g.groupname='"+groupname+"' "
+					+ "and mg.member_id="+id;
+			ResultSet validateExistanceinGroup=st.executeQuery(sql); 
+			if(SqlOperations.getCount(validateExistanceinGroup)==0){
+				ResultSet groupIdQuery=st.executeQuery("Select id from groups where groupname='"+groupname+"'");
+				groupIdQuery.next();
+				String insertQuery="Insert into "
+						+ "membergroups (group_id,member_id) "
+						+ "values ("+groupIdQuery.getInt("id")+", "+id+")";
+				st.executeUpdate(insertQuery);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
 	}
+	
 	
 	public ResultSet getMemberInfo(int id){
 		try {
@@ -115,4 +167,15 @@ public class MemberOperations {
 		return null;
 		
 	}
+	
+	public ResultSet getGroupInformation(int id){
+		String sql="Select * "
+				+ "from membergroups mg, groups g, members m "
+				+ "where mg.group_id=g.id and m.id=mg.member_id "
+				+ "and mg.group_id in (Select group_id "
+				                     + "from membergroups mg "
+				                     + "where mg.member_id="+id+")";
+		return SqlOperations.getQueryResult(sql);
+	}
+	
 }

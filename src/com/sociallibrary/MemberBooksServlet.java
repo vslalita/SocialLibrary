@@ -1,7 +1,6 @@
 package com.sociallibrary;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.ResultSet;
 
 import javax.servlet.ServletException;
@@ -31,18 +30,17 @@ public class MemberBooksServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setContentType("HTML");
-		PrintWriter out=response.getWriter();
-		out.println("hello");
-		MemberOperations mo1=new MemberOperations();
-		BookOperations bo1=new BookOperations();
-		ResultSet myBooks=bo1.getMyBooks();
-		ResultSet myGroups=mo1.getgroups();
+		if((request.getParameter("operation")!=null)&&(request.getParameter("operation").equals("Request"))){
+			BookServiceController.bookServicecontroller.requestBook(Integer.valueOf(request.getParameter("id")));
+		}
+		
+		ResultSet myGroups=MemberServiceController.memberServicecontroller.getgroups();
 
 		request.setAttribute("name",CurrentMember.cm.current_member.firstName+" "+CurrentMember.cm.current_member.lastName);
 		request.setAttribute("address",CurrentMember.cm.current_member.address);
 		request.setAttribute("email",CurrentMember.cm.current_member.Email);
 		request.setAttribute("member", CurrentMember.cm.current_member);
-		request.setAttribute("groupbooks", myBooks);
+		request.setAttribute("groupbooks", BookServiceController.bookServicecontroller.getBooks("GroupBooks",CurrentMember.cm.current_member.id));
 		request.setAttribute("groups", myGroups);
 
 		getServletContext().getRequestDispatcher("/books.jsp").forward(request, response);
@@ -53,11 +51,10 @@ public class MemberBooksServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		MemberOperations mo1=new MemberOperations();
-		ResultSet myGroups=mo1.getgroups();
-		BookOperations bo1=new BookOperations();
-		String s=request.getParameter("groupname").toString();
-		ResultSet groupBooks=bo1.getBooksbyGroup(s);
+		
+		ResultSet myGroups=MemberServiceController.memberServicecontroller.getgroups();
+		String groupName=request.getParameter("groupname").toString();
+		ResultSet groupBooks=BookServiceController.bookServicecontroller.getBooksbyGroup(groupName);
 
 		request.setAttribute("groups", myGroups);
 		request.setAttribute("groupbooks", groupBooks);

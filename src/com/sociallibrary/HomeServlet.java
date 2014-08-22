@@ -2,7 +2,6 @@ package com.sociallibrary;
 
 import java.io.IOException;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,13 +30,15 @@ public class HomeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//request.setAttribute("name", CurrentMember.cm.current_member.firstName+" "+CurrentMember.cm.current_member.lastName);
-		MemberOperations mo=new MemberOperations();
-		BookOperations bo=new BookOperations();
-		bo.setTypeofBooks(new GetCurrentUserOwnedBooks());
-		ResultSet myBooks=bo.getTypeBooks();
-		bo.setTypeofBooks(new GetCurrentUserBorrowedBooks());
-		ResultSet myBorrowedBooks=bo.getTypeBooks();
-		ResultSet myGroups=mo.getgroups();
+		if(request.getParameter("operation")!=null&&request.getParameter("operation").equals("Delete")){
+			BookServiceController.bookServicecontroller.deleteBook(Integer.valueOf(request.getParameter("id")));
+		}
+		
+		int id=CurrentMember.cm.current_member.id;
+		ResultSet myBooks=BookServiceController.bookServicecontroller.getBooks("OwnedBooks",id);
+		ResultSet myBorrowedBooks=BookServiceController.bookServicecontroller.getBooks("BorrowedBooks",id);
+		ResultSet myRequestedBooks=BookServiceController.bookServicecontroller.getBooks("RequestedBooks",id);
+		ResultSet myGroups=MemberServiceController.memberServicecontroller.getgroups();
 		
 		
 		request.setAttribute("name",CurrentMember.cm.current_member.firstName+" "+CurrentMember.cm.current_member.lastName);
@@ -47,6 +48,7 @@ public class HomeServlet extends HttpServlet {
         request.setAttribute("ownedbooks", myBooks);
         request.setAttribute("groups", myGroups);
 		request.setAttribute("borrowedbooks", myBorrowedBooks);
+		request.setAttribute("requestedbooks", myRequestedBooks);
         
         getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
 	}
@@ -55,6 +57,10 @@ public class HomeServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	}
+	
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
 

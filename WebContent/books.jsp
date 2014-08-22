@@ -44,8 +44,8 @@
 							<li><a href="/SocialLibrary/HomeServlet">Home</a></li>
 							<li class="active"><a
 								href="/SocialLibrary/MemberBooksServlet">Books</a></li>
-							<li><a href="#">Groups</a></li>
-							<li><a href="#">Add/Delete</a></li>
+							<li><a href="/SocialLibrary/GroupServlet">Groups</a></li>
+							<li><a href="/SocialLibrary/AddDeleteOperationServlet">Add/Delete</a></li>
 						</ul>
 					</div>
 					<!-- /.navbar-collapse -->
@@ -89,7 +89,7 @@
 							<table class="table">
 								<thead>
 									<tr>
-										<strong>Bookname 
+										<strong>Bookname </strong>
 									</tr>
 								</thead>
 								<tbody>
@@ -102,7 +102,8 @@
 											while (groupBooks.next()) {
 									%><tr>
 										<td><%=groupBooks.getString("bookname")%><br></td>
-										<td><button type="button" class="btn btn-warning">Request</button></td>
+										<%String url="/SocialLibrary/MemberBooksServlet?operation=Request&id="+groupBooks.getInt("id"); %>
+										<td><a href=<%=url%>><button type="button" class="btn btn-warning">Request</button></a></td>
 									</tr>
 									<%
 										}

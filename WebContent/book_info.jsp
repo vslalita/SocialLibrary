@@ -36,20 +36,42 @@
 		  <%} %>
 		  <br>
 		  <u><strong>OwnerInformation</strong></u><br>
-		  <% ResultSet ownerinfo=(ResultSet)request.getAttribute("owner"); %>
-		 <%while(ownerinfo.next()){ %>
+		  <% ResultSet ownerinfo=(ResultSet)request.getAttribute("owner"); 
+		   if(ownerinfo!=null){
+			   
+		   while(ownerinfo.next()){ %>
 		  Name: <%=ownerinfo.getString("firstname") %></br>
 		  Address: <%=ownerinfo.getString("address") %></br>
 		  Email: <%=ownerinfo.getString("email") %></br>
-		  <%} %>
-		 
+		  <%} }%>
+		
 		   <u><strong>Borrower Information</strong></u><br>
 		  <%ResultSet borrowerinfo=(ResultSet)request.getAttribute("borrower"); %>
-		 <%while(borrowerinfo.next()){ %>
+		 <% if(borrowerinfo!=null){
+		  while(borrowerinfo.next()){ %>
 		  Name: <%=borrowerinfo.getString("firstname") %> <br>
 		  Address: <%=borrowerinfo.getString("address") %> <br>
 		  Email: <%=borrowerinfo.getString("email") %> <br>
-		  <%} %>
+		  <%} }%>
+		  <br>
+		  <div class="row">
+		    <div class="col-md-3">
+		    <%String url="/SocialLibrary/BookInformationServlet?operation=setAvailibility&id="+request.getAttribute("id"); %>
+		      <a href=<%=url%> > <button type="button" class="btn btn-warning">Set Availability</button></a>
+		    </div>
+		  </div>
+		  <div class="row">
+		  People who requested for this book:
+		  <% ResultSet requestors=(ResultSet)request.getAttribute("requestors"); 
+		  if(requestors!=null){
+			  int i=1;
+			  while(requestors.next()){
+				  %><%=i%><%=requestors.getString("firstname")+" "+requestors.getString("lastname")%>
+			  <%}
+		  }
+		  %>
+		  
+		  </div>
 		  
 		</div>
 	</div>

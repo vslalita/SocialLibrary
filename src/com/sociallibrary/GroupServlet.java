@@ -10,42 +10,42 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class MemberGroupServlet
+ * Servlet implementation class GroupServlet
  */
-@WebServlet("/MemberGroupServlet")
-public class MemberGroupServlet extends HttpServlet {
+@WebServlet("/GroupServlet")
+public class GroupServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberGroupServlet() {
+    public GroupServlet() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+		int id=CurrentMember.cm.current_member.id;
+		ResultSet groupInfo=MemberServiceController.memberServicecontroller.getGroupInformation(id);
 		
-//		
-//		MemberOperations mo1=new MemberOperations();
-//		BookCRUDOperations bo1=new BookCRUDOperations();
-//		//ResultSet myBooks=bo1.getMyBooks();
-		ResultSet myGroups=MemberServiceController.memberServicecontroller.getgroups();
-
+		request.setAttribute("groupinfo", groupInfo);
 		request.setAttribute("name",CurrentMember.cm.current_member.firstName+" "+CurrentMember.cm.current_member.lastName);
 		request.setAttribute("address",CurrentMember.cm.current_member.address);
 		request.setAttribute("email",CurrentMember.cm.current_member.Email);
 		request.setAttribute("member", CurrentMember.cm.current_member);
-		request.setAttribute("groups", myGroups);
+		
 		getServletContext().getRequestDispatcher("/groups.jsp").forward(request, response);
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 	}
 
 }
