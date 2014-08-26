@@ -91,12 +91,12 @@ public class MemberServiceController {
 		return false;
 	}
 
-	public ResultSet getgroups(){
+	public ResultSet getgroups(int id){
 		
 		String sql="Select * "
 				+ "from groups g, membergroups mg "
 				+ "where g.id=mg.group_id "
-				+  "and member_id="+CurrentMember.cm.current_member.id;
+				+  "and member_id="+id;
 		
 		return SqlOperations.getQueryResult(sql);
 		
@@ -119,10 +119,8 @@ public class MemberServiceController {
 	
 	public ResultSet viewMemberDetails(int memberId){
 		String sql="Select * "
-				+ "from members m, membergroups mg, groups g "
-				+ "where mg.member_id=m.id "
-				+ "and g.id=mg.group_id "
-				+ "and mg.member_id="+memberId;
+				+ "from members "
+				+ "where id="+memberId;
        return SqlOperations.getQueryResult(sql);
 	}
 

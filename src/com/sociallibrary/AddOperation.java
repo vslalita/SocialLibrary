@@ -16,6 +16,7 @@ public class AddOperation implements BookOperationRequest {
 	@Override
 	public void execute() {
 		bo.addBook(book);
+		
 		try {
 			Statement st = DatabaseConnection.databaseInstance.conn.createStatement();
 			String sql="Select * from groups g, membergroups mg, members m "

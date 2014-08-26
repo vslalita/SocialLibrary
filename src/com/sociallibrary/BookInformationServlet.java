@@ -42,23 +42,13 @@ public class BookInformationServlet extends HttpServlet {
 				out.println("You cannot update availability because you are not an owner or a borrower for this book");
 			}
 		}
-		ResultSet bookDetails =BookServiceController.bookServicecontroller.getBookbyId(memberbookId);
-		request.setAttribute("book", bookDetails);
-		
-		try {
-			bookDetails.first();
-			ResultSet Owner=MemberServiceController.memberServicecontroller.getMemberInfo(bookDetails.getInt("owner_id"));
-			ResultSet Borrower=MemberServiceController.memberServicecontroller.getMemberInfo(bookDetails.getInt("borrower_id"));
-			request.setAttribute("owner", Owner);
-			request.setAttribute("borrower", Borrower);
-			request.setAttribute("id",memberbookId);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		ResultSet requestors=BookServiceController.bookServicecontroller.getBookRequestors(memberbookId);
-		request.setAttribute("requestors", requestors);
+        
+        BookInformation bookInfo=new BookInformation(memberbookId);
+		request.setAttribute("book", bookInfo.getBook());
+		request.setAttribute("owner", bookInfo.getBookOwner());
+		request.setAttribute("borrower",bookInfo.getBookBorrower() );
+		request.setAttribute("id",memberbookId);
+		request.setAttribute("requestors", bookInfo.getBookRequestors());
 		
 		request.setAttribute("name",CurrentMember.cm.current_member.firstName+" "+CurrentMember.cm.current_member.lastName);
 		request.setAttribute("address",CurrentMember.cm.current_member.address);

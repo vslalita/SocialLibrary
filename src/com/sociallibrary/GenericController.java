@@ -3,6 +3,9 @@ package com.sociallibrary;
 public class GenericController {
 	private static GenericController controller=null;
 	private GenericController(){
+		BookServiceController.getInstance();
+		MemberServiceController.getInstance();
+		GroupServiceController.getInstance();
 	}
 	
 	public static GenericController getInstance(){
@@ -11,19 +14,6 @@ public class GenericController {
 			return controller;
 		}
 		return controller;
-	}
-	
-	public void createInstanceType(String requestObjectType){
-		if(requestObjectType.equals("BookService")){
-			BookServiceController.getInstance();
-		}
-		else if(requestObjectType.equals("MemberService")){
-			MemberServiceController.getInstance();
-		}
-		else if(requestObjectType.equals("GroupService")){
-			GroupServiceController.getInstance();
-		}
-		
 	}
 	
 }

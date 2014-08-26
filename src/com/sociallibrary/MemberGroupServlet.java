@@ -32,7 +32,7 @@ public class MemberGroupServlet extends HttpServlet {
 //		MemberOperations mo1=new MemberOperations();
 //		BookCRUDOperations bo1=new BookCRUDOperations();
 //		//ResultSet myBooks=bo1.getMyBooks();
-		ResultSet myGroups=MemberServiceController.memberServicecontroller.getgroups();
+		ResultSet myGroups=MemberServiceController.memberServicecontroller.getgroups(CurrentMember.cm.current_member.id);
 
 		request.setAttribute("name",CurrentMember.cm.current_member.firstName+" "+CurrentMember.cm.current_member.lastName);
 		request.setAttribute("address",CurrentMember.cm.current_member.address);

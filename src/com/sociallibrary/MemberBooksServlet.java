@@ -34,7 +34,7 @@ public class MemberBooksServlet extends HttpServlet {
 			BookServiceController.bookServicecontroller.requestBook(Integer.valueOf(request.getParameter("id")));
 		}
 		
-		ResultSet myGroups=MemberServiceController.memberServicecontroller.getgroups();
+		ResultSet myGroups=MemberServiceController.memberServicecontroller.getgroups(CurrentMember.cm.current_member.id);
 
 		request.setAttribute("name",CurrentMember.cm.current_member.firstName+" "+CurrentMember.cm.current_member.lastName);
 		request.setAttribute("address",CurrentMember.cm.current_member.address);
@@ -52,7 +52,7 @@ public class MemberBooksServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		ResultSet myGroups=MemberServiceController.memberServicecontroller.getgroups();
+		ResultSet myGroups=MemberServiceController.memberServicecontroller.getgroups(CurrentMember.cm.current_member.id);
 		String groupName=request.getParameter("groupname").toString();
 		ResultSet groupBooks=BookServiceController.bookServicecontroller.getBooksbyGroup(groupName);
 

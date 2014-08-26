@@ -37,10 +37,7 @@ public class MainPage extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		GenericController gc=GenericController.getInstance();
-		gc.createInstanceType("MemberService");
-		gc.createInstanceType("BookService");
-		gc.createInstanceType("GroupService");
+		GenericController.getInstance();
 		response.setContentType("HTML");
 
 		
@@ -54,7 +51,7 @@ public class MainPage extends HttpServlet {
 			ResultSet myBooks=BookServiceController.bookServicecontroller.getBooks("OwnedBooks",id);
 			ResultSet myBorrowedBooks=BookServiceController.bookServicecontroller.getBooks("BorrowedBooks",id);
 			ResultSet myRequestedBooks=BookServiceController.bookServicecontroller.getBooks("RequestedBooks",id);
-			ResultSet myGroups=MemberServiceController.memberServicecontroller.getgroups();
+			ResultSet myGroups=MemberServiceController.memberServicecontroller.getgroups(CurrentMember.cm.current_member.id);
 			
 			
             request.setAttribute("ownedbooks", myBooks);

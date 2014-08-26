@@ -15,7 +15,6 @@
 	<div class="jumbotron page-header" style="background-color: #f0ad4e;">
 		<img src="http://www.mtzion.lib.il.us/logo15.jpg/image_preview">
 		<strong><large> Social Library</large></strong> 
-
 	</div>
 
 	<div class="row container-fluid">

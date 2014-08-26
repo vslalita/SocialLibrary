@@ -156,7 +156,6 @@
 			</div>
 		</div>
 	</div>
-   <
 	<script>
 		function showaddform() {
 			document.getElementById("addform").style.display = "block";

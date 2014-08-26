@@ -38,7 +38,7 @@ public class HomeServlet extends HttpServlet {
 		ResultSet myBooks=BookServiceController.bookServicecontroller.getBooks("OwnedBooks",id);
 		ResultSet myBorrowedBooks=BookServiceController.bookServicecontroller.getBooks("BorrowedBooks",id);
 		ResultSet myRequestedBooks=BookServiceController.bookServicecontroller.getBooks("RequestedBooks",id);
-		ResultSet myGroups=MemberServiceController.memberServicecontroller.getgroups();
+		ResultSet myGroups=MemberServiceController.memberServicecontroller.getgroups(CurrentMember.cm.current_member.id);
 		
 		
 		request.setAttribute("name",CurrentMember.cm.current_member.firstName+" "+CurrentMember.cm.current_member.lastName);

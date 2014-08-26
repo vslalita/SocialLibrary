@@ -75,17 +75,6 @@ public class BookServiceController {
 		return SqlOperations.getQueryResult(sql);
 	}
 
-	public ResultSet getBookRequestors(int memberBookId){
-
-		String sql="Select * "
-				+ "from members m, bookrequest br "
-				+ "where br.member_id=m.id "
-				+ "and br.member_book_id="+memberBookId;
-
-		return SqlOperations.getQueryResult(sql);
-	}
-
-
 	public boolean updateAvailibility(int memberBookid){
 		try {
 			Statement st = DatabaseConnection.databaseInstance.conn.createStatement();
@@ -122,25 +111,23 @@ public class BookServiceController {
 		return SqlOperations.getQueryResult(sql);
 	}
 	
-  public String getCategory(int memberBookid){
-		
-		try {
-			Statement st = DatabaseConnection.databaseInstance.conn.createStatement();
-			String sql="Select * "
-					+ "from books b, bookcategories bc, memberbooks mb "
-					+ "where mb.book_id=b.id "
-					+ "and b.category_id=bc.id "
-					+ "and mb.id="+memberBookid;
-		    ResultSet category=st.executeQuery(sql);
-		    category.first();
-		    return category.getString("categoryname");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
-
+//  public String getCategory(int memberBookid){
+//		
+//		try {
+//			Statement st = DatabaseConnection.databaseInstance.conn.createStatement();
+//			String sql="Select * "
+//					+ "from books b, bookcategories bc, memberbooks mb "
+//					+ "where mb.book_id=b.id "
+//					+ "and b.category_id=bc.id "
+//					+ "and mb.id="+memberBookid;
+//		    ResultSet category=st.executeQuery(sql);
+//		    category.first();
+//		    return category.getString("categoryname");
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return null;
+//	}
 	
 }
