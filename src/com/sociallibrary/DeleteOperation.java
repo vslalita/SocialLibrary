@@ -1,5 +1,9 @@
 package com.sociallibrary;
 
+
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class DeleteOperation implements BookOperationRequest {
     private int id;
     
@@ -9,8 +13,20 @@ public class DeleteOperation implements BookOperationRequest {
     
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+		deleteBookRequests();
         bo.deleteBook(id);
+	}
+	
+	public void deleteBookRequests(){
+		String sql ="Delete from bookrequest where member_book_id="+id;
+		Statement st;
+		try {
+			st = DatabaseConnection.databaseInstance.conn.createStatement();
+			st.executeUpdate(sql);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
 	}
 
 }

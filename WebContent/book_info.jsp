@@ -57,7 +57,9 @@
 		  <div class="row">
 		    <div class="col-md-3">
 		    <%String url="/SocialLibrary/BookInformationServlet?operation=setAvailibility&id="+request.getAttribute("id"); %>
-		      <a href=<%=url%> > <button type="button" class="btn btn-warning">Set Availability</button></a>
+		     <%String deliveryurl="/SocialLibrary/BookInformationServlet?operation=setBorrower&id="+request.getAttribute("id"); %>
+		      <a href=<%=url%> > <button type="button" class="btn btn-warning">Set Availability</button></a><br>
+		      <a href=<%=deliveryurl%>> <button type="button" class="btn btn-warning">Delivered</button></a>
 		    </div>
 		  </div>
 		  <div class="row">

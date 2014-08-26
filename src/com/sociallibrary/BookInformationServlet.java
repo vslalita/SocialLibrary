@@ -2,8 +2,6 @@ package com.sociallibrary;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,16 +29,14 @@ public class BookInformationServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		PrintWriter out=response.getWriter();
+	
 		int memberbookId=Integer.valueOf(request.getParameter("id"));
 		
         if(request.getParameter("operation")!=null&&(request.getParameter("operation").equals("setAvailibility"))){
-			if(BookServiceController.bookServicecontroller.updateAvailibility(memberbookId)){
-				
-			}
-			else{
-				out.println("You cannot update availability because you are not an owner or a borrower for this book");
-			}
+        	BookServiceController.bookServicecontroller.updateBook("availability", memberbookId);
+		}
+        if(request.getParameter("operation")!=null&&(request.getParameter("operation").equals("setBorrower"))){
+        	BookServiceController.bookServicecontroller.updateBook("borrower", memberbookId);
 		}
         
         BookInformation bookInfo=new BookInformation(memberbookId);

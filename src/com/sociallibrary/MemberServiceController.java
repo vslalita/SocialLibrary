@@ -97,7 +97,6 @@ public class MemberServiceController {
 				+ "from groups g, membergroups mg "
 				+ "where g.id=mg.group_id "
 				+  "and member_id="+id;
-		
 		return SqlOperations.getQueryResult(sql);
 		
 	}

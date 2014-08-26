@@ -7,31 +7,30 @@ import java.util.ArrayList;
 
 public class BookServiceController {
 	static BookServiceController bookServicecontroller=null;
-	private GetUserRelatedBooks booksType;
 	private BookServiceController(){
 	}
-	
+
 	public void addBook(Book book){
 		OperationsFacade of=new OperationsFacade();
 		of.operations("Add", null, book);
 		of.executeRequests();
 	}
-	
+
 	public void deleteBook(int id){
 		OperationsFacade of=new OperationsFacade();
 		of.operations("Delete",id,null);
 	}
-	
+
 	public void requestBook(int id){
 		OperationsFacade of=new OperationsFacade();
 		of.operations("Request",id,null);
 	}
-	
+
 	public void execute(){
 		OperationsFacade of=new OperationsFacade();
 		of.executeRequests();
 	}
-	
+
 	public ArrayList<String> displayBooks(String bookType){
 		OperationsFacade of=new OperationsFacade();
 		if(bookType.equals("DeletedBooks")){
@@ -52,9 +51,9 @@ public class BookServiceController {
 	}
 
 	public ResultSet getBooks(String bookType, int id){
-	   GetBooksFactory bookFactory=new GetBooksFactory();
-	   GetUserRelatedBooks books=bookFactory.createBookList(bookType);
-	   return books.getBooks(id);
+		GetBooksFactory bookFactory=new GetBooksFactory();
+		GetUserRelatedBooks books=bookFactory.createBookList(bookType);
+		return books.getBooks(id);
 	}
 
 	public ResultSet getBookbyId(int memberBookid){
@@ -65,30 +64,42 @@ public class BookServiceController {
 		return SqlOperations.getQueryResult(sql);
 	}
 
-	public boolean updateAvailibility(int memberBookid){
-		try {
-			Statement st = DatabaseConnection.databaseInstance.conn.createStatement();
-			String sql="Select * from memberbooks where id="+memberBookid;
-			ResultSet bookInfo=st.executeQuery(sql);
-			bookInfo.first();
-			int id=CurrentMember.cm.current_member.id;
-			if(((bookInfo.getInt("owner_id")==id)||(bookInfo.getInt("borrower_id")==id))&&bookInfo.getBoolean("availability")==true){
-				String updateQuery="update memberbooks set availability=false where id="+memberBookid;
-				st.executeUpdate(updateQuery);
-				return true;
-			}
-			else if(((bookInfo.getInt("owner_id")==id)||(bookInfo.getInt("borrower_id")==id))&&bookInfo.getBoolean("availability")==false){
-				String updateQuery="update memberbooks set availability=true where id="+memberBookid;
-				st.executeUpdate(updateQuery);
-				return true;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+	public void updateBook(String updateField, int id){
+		UpdateBookInfo update;
+		if(updateField.equals("availability")){
+			update=new UpdateBookAvailability();
+			update.updateTemplate(id);
 		}
-		return false;
+		else if(updateField.equals("borrower")){
+			update=new UpdateBookBorrower();
+			update.updateTemplate(id);
+		}
 	}
-	
-	
+
+//	public boolean updateAvailibility(int memberBookid){
+//		try {
+//			Statement st = DatabaseConnection.databaseInstance.conn.createStatement();
+//			String sql="Select * from memberbooks where id="+memberBookid;
+//			ResultSet bookInfo=st.executeQuery(sql);
+//			bookInfo.first();
+//			int id=CurrentMember.cm.current_member.id;
+//			if(((bookInfo.getInt("owner_id")==id)||(bookInfo.getInt("borrower_id")==id))&&bookInfo.getBoolean("availability")==true){
+//				String updateQuery="update memberbooks set availability=false where id="+memberBookid;
+//				st.executeUpdate(updateQuery);
+//				return true;
+//			}
+//			else if(((bookInfo.getInt("owner_id")==id)||(bookInfo.getInt("borrower_id")==id))&&bookInfo.getBoolean("availability")==false){
+//				String updateQuery="update memberbooks set availability=true where id="+memberBookid;
+//				st.executeUpdate(updateQuery);
+//				return true;
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return false;
+//	}
+
+
 	public ResultSet getBooksbyGroup(String groupName){
 		String sql="Select * "
 				+ "from memberbooks mb, groups g, membergroups mg, members m, books b "
@@ -100,24 +111,24 @@ public class BookServiceController {
 				+ "and mb.owner_id !="+CurrentMember.cm.current_member.id;
 		return SqlOperations.getQueryResult(sql);
 	}
-	
-//  public String getCategory(int memberBookid){
-//		
-//		try {
-//			Statement st = DatabaseConnection.databaseInstance.conn.createStatement();
-//			String sql="Select * "
-//					+ "from books b, bookcategories bc, memberbooks mb "
-//					+ "where mb.book_id=b.id "
-//					+ "and b.category_id=bc.id "
-//					+ "and mb.id="+memberBookid;
-//		    ResultSet category=st.executeQuery(sql);
-//		    category.first();
-//		    return category.getString("categoryname");
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		return null;
-//	}
-	
+
+	//  public String getCategory(int memberBookid){
+	//		
+	//		try {
+	//			Statement st = DatabaseConnection.databaseInstance.conn.createStatement();
+	//			String sql="Select * "
+	//					+ "from books b, bookcategories bc, memberbooks mb "
+	//					+ "where mb.book_id=b.id "
+	//					+ "and b.category_id=bc.id "
+	//					+ "and mb.id="+memberBookid;
+	//		    ResultSet category=st.executeQuery(sql);
+	//		    category.first();
+	//		    return category.getString("categoryname");
+	//		} catch (SQLException e) {
+	//			// TODO Auto-generated catch block
+	//			e.printStackTrace();
+	//		}
+	//		return null;
+	//	}
+
 }

@@ -16,7 +16,7 @@ public class AddOperation implements BookOperationRequest {
 	@Override
 	public void execute() {
 		bo.addBook(book);
-		
+		updateRating();
 		try {
 			Statement st = DatabaseConnection.databaseInstance.conn.createStatement();
 			String sql="Select * from groups g, membergroups mg, members m "
@@ -34,9 +34,32 @@ public class AddOperation implements BookOperationRequest {
 			}
 			notifyAllMembers();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void updateRating(){
+		String sql= "Select mb.rating memberrating "
+				+ "from memberbooks mb,books b "
+				+ "where mb.book_id=b.id "
+				+ "and b.ISBN="+book.bookISBN;
+		int rating=0;
+		int count=0;
+		Statement st;
+		try {
+			st = DatabaseConnection.databaseInstance.conn.createStatement();
+			ResultSet ratingList=st.executeQuery(sql);
+			while(ratingList.next()){
+				count=count+1;
+				rating =rating+ratingList.getInt("memberrating");
+			}
+			String updateRatingQuery="Update books "
+					                + "set rating="+(rating/count)+" "
+					                + "where isbn="+book.bookISBN;
+			st.executeUpdate(updateRatingQuery);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
 	}
   
 	public void notifyAllMembers(){
