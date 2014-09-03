@@ -46,6 +46,8 @@
 								href="/SocialLibrary/MemberBooksServlet">Books</a></li>
 							<li><a href="/SocialLibrary/GroupServlet">Groups</a></li>
 							<li><a href="/SocialLibrary/AddDeleteOperationServlet">Add/Delete</a></li>
+							<li><a href="/SocialLibrary/NewsFeedServlet">News Feed</a></li>
+							<li><a href="/SocialLibrary/BuyBooksServlet">Buy Book</a></li>
 						</ul>
 					</div>
 					<!-- /.navbar-collapse -->
@@ -61,7 +63,7 @@
 							<%
 								ResultSet mygroups = (ResultSet) request.getAttribute("groups");
 							%>
-							<%
+							<%  if(mygroups!=null){
 								try {
 									while (mygroups.next()) {
 							%>
@@ -73,7 +75,7 @@
 								} catch (SQLException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
-								}
+								}}
 							%>
 						</select><br>
 						<button type="submit" class="btn btn-default">Search
@@ -97,7 +99,7 @@
 										ResultSet groupBooks = (ResultSet) request
 												.getAttribute("groupbooks");
 									%>
-									<%
+									<% if(groupBooks!=null){
 										try {
 											while (groupBooks.next()) {
 									%><tr>
@@ -110,7 +112,7 @@
 										} catch (SQLException e) {
 											// TODO Auto-generated catch block
 											e.printStackTrace();
-										}
+										}}
 									%>
 								</tbody>
 							</table>

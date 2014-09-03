@@ -2,6 +2,8 @@ package com.sociallibrary;
 
 import java.sql.*;
 
+import com.sociallibrary.db.DBHelper;
+
 public class GetUserBorrowedBooks implements GetUserRelatedBooks{
 
 	@Override
@@ -11,7 +13,7 @@ public class GetUserBorrowedBooks implements GetUserRelatedBooks{
 				+ "from memberbooks mb,books b "
 				+ "where mb.borrower_id="+id+" "
 				+ "and mb.book_id=b.id";
-		return SqlOperations.getQueryResult(sql);
+		return DBHelper.getQueryResult(sql);
 	}
 
 }

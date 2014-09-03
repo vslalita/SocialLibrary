@@ -2,6 +2,8 @@ package com.sociallibrary;
 
 import java.sql.*;
 
+import com.sociallibrary.db.DBHelper;
+
 public class GetUserRequestedBooks implements GetUserRelatedBooks {
 
 	@Override
@@ -12,7 +14,7 @@ public class GetUserRequestedBooks implements GetUserRelatedBooks {
 				+ "where br.member_book_id=mb.id "
 				+ "and mb.book_id=b.id "
 				+ "and br.member_id="+id;
-		return SqlOperations.getQueryResult(sql);
+		return DBHelper.getQueryResult(sql);
 	}
 
 }

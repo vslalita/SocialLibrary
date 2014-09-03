@@ -50,6 +50,8 @@
 							<li><a href="/SocialLibrary/MemberBooksServlet">Books</a></li>
 							<li><a href="/SocialLibrary/GroupServlet">Groups</a></li>
 							<li><a href="/SocialLibrary/AddDeleteOperationServlet">Add/Delete</a></li>
+							<li><a href="/SocialLibrary/NewsFeedServlet">News Feed</a></li>
+							<li><a href="/SocialLibrary/BuyBooksServlet">Buy Book</a></li>
 						</ul>
 					</div>
 					<!-- /.navbar-collapse -->
@@ -82,7 +84,9 @@
                                         
                                       </tr>
                                       
-										<%
+										<%if(rs!=null){
+											
+										
 											try { 
 												
 										while (rs.next()) {
@@ -97,7 +101,7 @@
 											} catch (SQLException e) {
 												// TODO Auto-generated catch block
 												e.printStackTrace();
-											}
+											}}
 										%></table>
 									</div>
 								</div>
@@ -130,7 +134,7 @@
 										<%
 										ResultSet myrequestedBooks = (ResultSet) request.getAttribute("requestedbooks");
 									%>
-									<%
+									<%if(myrequestedBooks!=null){
 										try {
 											while (myrequestedBooks.next()) {
 												String url="/SocialLibrary/BookInformationServlet?id="+myrequestedBooks.getInt("member_book_id");
@@ -141,7 +145,7 @@
 										} catch (SQLException e) {
 											// TODO Auto-generated catch block
 											e.printStackTrace();
-										}
+										}}
 									%></td></tr>
 										</table>
 									</div>
@@ -165,6 +169,7 @@
 
 									<%
 										ResultSet mygroups = (ResultSet) request.getAttribute("groups");
+									  if(mygroups!=null){
 									%>
 									<%
 										try {
@@ -176,7 +181,7 @@
 										} catch (SQLException e) {
 											// TODO Auto-generated catch block
 											e.printStackTrace();
-										}
+										}}
 									%>
 								</div>
 							</div>
@@ -198,6 +203,7 @@
 
 									<%
 											ResultSet borrowedBooks = (ResultSet) request.getAttribute("borrowedbooks");
+									      if(borrowedBooks!=null){
 									%>
 									<%
 											try {
@@ -209,7 +215,7 @@
 											} catch (SQLException e) {
 												// TODO Auto-generated catch block
 												e.printStackTrace();
-											}
+											}}
 										%>
 								</div>
 							</div>
