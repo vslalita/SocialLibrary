@@ -49,6 +49,7 @@
 							<li class="active"><a href="/SocialLibrary/HomeServlet">Home</a></li>
 							<li><a href="/SocialLibrary/MemberBooksServlet">Books</a></li>
 							<li><a href="/SocialLibrary/GroupServlet">Groups</a></li>
+							<li><a href="/SocialLibrary/SearchingServlet">Search</a></li>
 							<li><a href="/SocialLibrary/AddDeleteOperationServlet">Add/Delete</a></li>
 							<li><a href="/SocialLibrary/NewsFeedServlet">News Feed</a></li>
 							<li><a href="/SocialLibrary/BuyBooksServlet">Buy Book</a></li>

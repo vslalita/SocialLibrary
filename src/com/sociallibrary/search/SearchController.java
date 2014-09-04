@@ -3,8 +3,6 @@ package com.sociallibrary.search;
 import java.io.IOException;
 import java.sql.ResultSet;
 
-import com.sociallibrary.MemberNameSearch;
-
 public class SearchController {
 		
 	public ResultSet getData(String searchType,String searchParameter){

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -11,18 +11,15 @@
 <title>Social Library</title>
 </head>
 <body>
-<div class="jumbotron page-header" style="background-color: #f0ad4e;">
+<body>
+	<div class="jumbotron page-header" style="background-color: #f0ad4e;">
 		<img src="http://www.mtzion.lib.il.us/logo15.jpg/image_preview">
 		<strong><large> Social Library</large></strong> </img>
 
 	</div>
 
 	<div class="row container-fluid">
-		<div class="col-md-4 container-fluid">
-			Profile Information<br> Name:<%=request.getAttribute("name").toString()%><br>
-			Address:<%=request.getAttribute("address").toString()%><br>
-			E-Mail:<%=request.getAttribute("email").toString()%><br>
-		</div>
+		<div class="col-md-4 container-fluid"></div>
 		<div class="col-md-8">
 			<div class="row">
 				<nav class="navbar navbar-default" role="navigation">
@@ -48,56 +45,54 @@
 							<li><a href="/SocialLibrary/SearchingServlet">Search</a></li>
 							<li><a href="/SocialLibrary/AddDeleteOperationServlet">Add/Delete</a></li>
 							<li><a href="/SocialLibrary/NewsFeedServlet">News Feed</a></li>
-							<li><a href="/SocialLibrary/BuyBookServlet">Buy Book</a></li>
+							<li><a href="/SocialLibrary/BuyBooksServlet">Buy Book</a></li>
 						</ul>
 					</div>
 					<!-- /.navbar-collapse -->
 				</div>
-				<!-- /.container-fluid --> </nav>
+				</nav>
+				<div class="row">
+					<form class="form" action="SearchServlet2" method="GET">
+						<div class="form-group">
+						 <label>Search by</label>
+							<select name="searchtype">
+							   <option  value=" "></option>
+								<option  value="bookname">BookName</option>
+								<option  value="isbn">ISBN</option>
+								<option value="membername">Membername</option>
+							</select><br>
+							<br>
+							<div class="form-group">
+								 <input
+									type="input" class="form-control" name="searchattribute"
+									placeholder="Search">
+							</div>
+							<button class="btn btn-default">Search</button>
+						</div>
+					</form>
+				</div>
+				<div class="row">
+				   <%@page import="java.sql.*" %>
+				   <%ResultSet bookList=(ResultSet)request.getAttribute("bookresult"); %>
+				   <%if(bookList!=null){
+					  while(bookList.next()){
+						  %>
+						  <%=bookList.getString("bookname") %>
+					  <%}%>
+					   
+				  <%} %>
+				  
+				  <%ResultSet memberList=(ResultSet)request.getAttribute("memberresult"); %>
+				   <%if(memberList!=null){
+					  while(memberList.next()){
+						  %>
+						  <%=memberList.getString("firstname")+" "+memberList.getString("lastname") %>
+					  <%}%>
+					   
+				  <%} %>
+				  
+				</div>
 			</div>
-            <div class="row">
-              <%@page import="java.sql.*"%>
-              <%ResultSet books=(ResultSet)request.getAttribute("books"); %>
-              <%if(books!=null){
-    	          while(books.next()){
-    		         int id=books.getInt("book_id");
-    		    %>
-    		   <%=books.getString("bookname")
-    		     %>
-    		 <form action="PurchaseServlet" method="get">
-		<h4>Place Order</h4>
-
-		<p>
-			<strong>Choose Payment Type :</strong>
-		</p>
-				<input type="radio" name="payment_option" value="creditcard">Credit
-				Card
-				<br>
-				<input type="radio" name="payment_option" value="bitcoin">Bit
-				Coin
-		<p>
-			<strong>Choose Delivery Type :</strong>
-		</p>
-				<input type="checkbox" name="delivery_type" value="selfpickup">
-				Self PickUp
-				<br>
-				<input type="checkbox" name="delivery_type" value="ownerdrop">Delivery
-				by Owner
-				<br>
-				<input type="checkbox" name="id" value=<%=id %> required>CheckOut
-				<br>
-    		 <br>
-		<INPUT TYPE="submit" VALUE="Submit">
-	</form>
-    		 
-    		  
-    		 <% 
-    	 }
-    	 %>
-    <% }%>
-    
-    </div>
-    </div>
-  </div>
+			</div>
 </body>
 </html>
