@@ -6,7 +6,7 @@ Social library for a group of members. This document gives the instructions on h
 Tools Used: 
 
 Web Server: jetty
-Database Server: mySQL (Version: )
+Database Server: mySQL (Version:
 
 Steps to install mysql on windows: 
  Step 1: Download mysql from the link - http://dev.mysql.com/downloads/mysql/. 
